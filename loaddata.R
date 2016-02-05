@@ -10,7 +10,7 @@ readtime
 
 # Read in the dataset - a text file called household_power_consumption.txt
 # Note: NA character is "?", there are variable names in a header
-power <- read.csv(file="household_power_consumption.txt", sep=';', header=TRUE, na.strings = '?',
+power <- read.csv(file="./data/household_power_consumption.txt", sep=';', header=TRUE, na.strings = '?',
    colClasses = c('character', 'character', 'numeric', 'numeric', 'numeric', 'numeric', 'numeric', 'numeric', 'numeric' ) )
 
 # convert variables Date and Time into the proper format, make that be the first column
@@ -23,8 +23,8 @@ power <- select(power, 10, 3:9)
 
 #Filter the 2M observqtions down to the ones of interest
 startdate <- as.POSIXct('2007-02-01')
-enddate <- as.POSIXct('2007-02-02')
-p2 <- filter(power, DateTime > startdate & DateTime < enddate)
+enddate <- as.POSIXct('2007-02-03')
+p2 <- filter(power, DateTime >= startdate & DateTime <= enddate)
 
 # save the data for future manipulation
 save(power, file = "power.rda")
@@ -35,3 +35,4 @@ write.table(power, file="power.csv",append=FALSE,quote=TRUE,sep=",",
 write.table(p2, file="p2.csv",append=FALSE,quote=TRUE,sep=",", 
             eol="\n",na="NA",dec=".",row.names=FALSE, col.names=TRUE,
             qmethod=c("escape","double"), fileEncoding="")
+
